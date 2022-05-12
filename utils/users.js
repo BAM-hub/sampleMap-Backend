@@ -1,5 +1,11 @@
-let captins = [];
-let users = [];
+let captins = [
+  {"cords": {"latitude": 31.5219983, "longitude": -120.084}},
+  {"cords": {"latitude": 37.4219983, "longitude": -122.084}}
+];
+let users = [
+  {"cords": {"latitude": 30.5219983, "longitude": -120.084}},
+  {"cords": {"latitude": 37.4219983, "longitude": -122.084}}
+];
 
 function userJoin(user) {
   if(user.type === 'captin')
