@@ -11,6 +11,7 @@ let captins = [
     'line': 'Amman As-Salt',
     'distance': 'Calculating',
     'time': 'Calculating',
+    'type': 'captin',
     'coords': {
         'latitude': 31.966882,
         'longitude': 35.988638
@@ -23,6 +24,7 @@ let captins = [
     'line': 'Amman As-Salt',
     'distance': 'Calculating',
     'time': 'Calculating',
+    'type': 'captin',
     'coords': {
         'latitude': 31.963817,
         'longitude': 35.975449
@@ -36,6 +38,7 @@ let users = [
     'id': '2',
     'name': 'BAM',
     'line': 'Amman As-Salt',
+    'type': 'passenger',
     'coords': {
             'latitude': 31.966882,
             'longitude': 35.988638
@@ -46,6 +49,7 @@ let users = [
     'id': '3',
     'name': 'Ali',
     'line': 'Amman As-Salt',
+    'type': 'passenger',
     'coords': {
         'latitude': 31.963817,
         'longitude': 35.975449
@@ -57,21 +61,29 @@ function userJoin(user) {
   if(user.type === 'captin')
     return captins.push(user);
   users.push(user);
+  console.log('user', users, '\n', captins)
 };
 
-function userLeave(id, type) {
-  if(type === 'passenger') {
-    const index = users.findIndex(user => user.id === id);
-    if( index !== -1 ) {
-      users = users.splice(index, 1)[0];
-      return users;
-    }
+function userLeave(sid) {
+  const index1 = users.findIndex(user => user.sid === sid);
+  if( index1 !== -1 ) {
+    users = users.filter(user => user.sid !== sid);
+    console.log('user', users, '\n cap', captins)
+    return {
+      data: {...users},
+      type: 'captin'
+    };
   }
   
-  const index = captins.findIndex(captin => captin.id === id);
+  const index = captins.findIndex(captin => captin.sid === sid);
   if( index !== -1 ) {
-    captins = captins.splice(index, 1)[0];
-    return captins;
+    captins = captins.filter(captin => captin.sid !== sid);;
+    console.log('user', users, '\n cap', captins)
+
+    return {
+      data: {...captins},
+      type: 'passenger'
+    };
   }
 };
 

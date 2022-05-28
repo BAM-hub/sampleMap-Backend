@@ -11,15 +11,19 @@ const io = new Server(httpServer);
 
 
 io.on('connection', socket => {
-  console.log(socket.id);
+  // console.log(socket.id);
 
   socket.on('join', user => {
     // console.log('id', user.id)
     socket.join(user.id);
-    userJoin(user);
+    socket.join(user.type);
+    userJoin({
+      ...user,
+      sid: socket.id
+    });
     const markerCords = getMarkerCords(user.type);
-    console.log('cords', markerCords);
-    socket.emit('initial-coords', {id: user.id, markerCords});
+    // console.log('cords', markerCords);
+    socket.emit('initial-coords', markerCords);
   });
 
   socket.on('leave', user => socket.leave(user.id));
@@ -45,9 +49,11 @@ io.on('connection', socket => {
     socket.to(ride.driverId).emit('cancelRide', ride);
   });
 
-  socket.on('disconnect', user => {
-    userLeave(user.id, user.type);
-    socket.emit('user_disconnect', user);
+  socket.on('disconnect', () => {
+    console.log('left')
+    const res = userLeave(socket.id);
+    socket.emit('user_disconnect', socket.id);
+    socket.to(res.type).emit('initial-coords', res.data);
   });
 });
 
