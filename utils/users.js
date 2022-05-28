@@ -64,6 +64,21 @@ function userJoin(user) {
   console.log('user', users, '\n', captins)
 };
 
+function getUser(sid) {
+  console.log(users);
+  let user = users.filter(user => user.sid === sid);
+  if(user.length !== 0) {
+    console.log(user);
+    return user[0];
+  }
+
+  const index = captins.findIndex(captin => captin.sid === sid);
+  if( index !== -1 ) {
+    let captin = captins.filter(captin => captin.sid === sid);;
+    return captin[0];
+  }
+}
+
 function userLeave(sid) {
   const index1 = users.findIndex(user => user.sid === sid);
   if( index1 !== -1 ) {
@@ -108,5 +123,6 @@ module.exports = {
   userJoin,
   userLeave,
   getMarkerCords,
-  inLine
+  inLine,
+  getUser
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const { userJoin, userLeave, getMarkerCords, inLine } = require('./utils/users');
+const { userJoin, userLeave, getMarkerCords, inLine, getUser } = require('./utils/users');
 
 const app = express();
 
@@ -14,7 +14,7 @@ io.on('connection', socket => {
   // console.log(socket.id);
 
   socket.on('join', user => {
-    // console.log('id', user.id)
+    console.log('id', user.id)
     socket.join(user.id);
     socket.join(user.type);
     userJoin({
@@ -23,13 +23,17 @@ io.on('connection', socket => {
     });
     const markerCords = getMarkerCords(user.type);
     // console.log('cords', markerCords);
-    socket.emit('initial-coords', markerCords);
+    socket.emit('initial-coords',  {id: user.id, markerCords});
+  });
+
+  socket.on('user_live', user => {
+      socket.emit('new_user', user);
   });
 
   socket.on('leave', user => socket.leave(user.id));
 
   socket.on('driverBroadcast', user => {
-    socket.emit('changeLocation', user);
+    socket.to('passenger').emit('changeLocation', user);
   });
 
   socket.on('raidRequest', request => {
@@ -51,9 +55,11 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     console.log('left')
-    const res = userLeave(socket.id);
-    socket.emit('user_disconnect', socket.id);
-    socket.to(res.type).emit('initial-coords', res.data);
+    const user = getUser(socket.id);
+    console.log('user', user);
+    userLeave(socket.id);
+    socket.emit('user_disconnect', user);
+    // socket.to(res.type).emit('update-coords', res.data);
   });
 });
 
