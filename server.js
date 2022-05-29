@@ -15,7 +15,7 @@ io.on('connection', socket => {
 
   socket.on('join', user => {
     
-    // console.log('id', user.id);
+    console.log('id', user.id);
     socket.join(user.id);
     socket.join(user.type);
     userJoin({
@@ -41,7 +41,7 @@ io.on('connection', socket => {
     // console.log(request)
     let answer = inLine(request.location);
     // console.log(answer)
-    if(answer)
+    // if(answer)
       return socket.to(request.driverId).emit('raidRequest', request);
     socket.emit('rideResponse', { ...request, ...answer });
   });
