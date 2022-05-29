@@ -15,7 +15,6 @@ io.on('connection', socket => {
 
   socket.on('join', user => {
     
-    socket.emit('rideRequest', {userId: 0, driverId: 0, coords: { latitude: 32.06752369632606, longitude: 35.706198857908326 }})
     // console.log('id', user.id);
     socket.join(user.id);
     socket.join(user.type);
