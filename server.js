@@ -37,12 +37,12 @@ io.on('connection', socket => {
     socket.to('passenger').emit('changeLocation', user);
   });
 
-  socket.on('raidRequest', request => {
+  socket.on('ride_request', request => {
     // console.log(request)
     // let answer = inLine(request.location);
     // console.log(answer)
     // if(answer)
-      socket.emit('raidRequest', request);
+      socket.emit('get_answer', request);
     // socket.emit('rideResponse', { ...request, ...answer });
   });
 
