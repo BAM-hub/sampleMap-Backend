@@ -39,11 +39,11 @@ io.on('connection', socket => {
 
   socket.on('raidRequest', request => {
     // console.log(request)
-    let answer = inLine(request.location);
+    // let answer = inLine(request.location);
     // console.log(answer)
     // if(answer)
-      return socket.emit('raidRequest', request);
-    socket.emit('rideResponse', { ...request, ...answer });
+      socket.emit('raidRequest', request);
+    // socket.emit('rideResponse', { ...request, ...answer });
   });
 
   socket.on('answer', answer => {
