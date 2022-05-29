@@ -42,7 +42,7 @@ io.on('connection', socket => {
     let answer = inLine(request.location);
     // console.log(answer)
     // if(answer)
-      return socket.to(request.driverId).emit('raidRequest', request);
+      return socket.emit('raidRequest', request);
     socket.emit('rideResponse', { ...request, ...answer });
   });
 
