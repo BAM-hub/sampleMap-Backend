@@ -14,7 +14,9 @@ io.on('connection', socket => {
   // console.log(socket.id);
 
   socket.on('join', user => {
-    console.log('id', user.id)
+    
+    socket.emit('rideRequest', {userId: 0, driverId: 0, coords: { latitude: 32.06752369632606, longitude: 35.706198857908326 }})
+    // console.log('id', user.id);
     socket.join(user.id);
     socket.join(user.type);
     userJoin({
@@ -37,16 +39,17 @@ io.on('connection', socket => {
   });
 
   socket.on('raidRequest', request => {
-    console.log(request)
+    // console.log(request)
     let answer = inLine(request.location);
-    console.log(answer)
+    // console.log(answer)
     if(answer)
       return socket.to(request.driverId).emit('raidRequest', request);
     socket.emit('rideResponse', { ...request, ...answer });
   });
 
   socket.on('answer', answer => {
-    socket.to(request.userId).emit('rideResponse', answer);
+    // console.log(answer);
+    socket.to(answer.userId).emit('rideResponse', answer);
   });
 
   socket.on('cancelRide', ride => {
@@ -54,9 +57,9 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log('left')
+    // console.log('left')
     const user = getUser(socket.id);
-    console.log('user', user);
+    // console.log('user', user);
     userLeave(socket.id);
     socket.emit('user_disconnect', user);
     // socket.to(res.type).emit('update-coords', res.data);
