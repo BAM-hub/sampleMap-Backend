@@ -64,9 +64,9 @@ io.on('connection', socket => {
     // console.log(request)
     // let answer = inLine(request.location);
     // console.log(answer)
-    if(answer)
+    // if(answer)
       return socket.emit('get_answer', request);
-    socket.emit('rideResponse', { ...request, ...answer });
+    // socket.emit('rideResponse', { ...request, ...answer });
   });
 
   socket.on('answer', answer => {
