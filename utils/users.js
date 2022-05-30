@@ -37,7 +37,7 @@ let users = [
     'sid': '2',
     'id': '2',
     'name': 'BAM',
-    'line': 'Amman As-Salt',
+    'line': '',
     'type': 'passenger',
     'coords': {
             'latitude': 31.966882,
@@ -48,7 +48,7 @@ let users = [
     'sid': '3',
     'id': '3',
     'name': 'Ali',
-    'line': 'Amman As-Salt',
+    'line': '',
     'type': 'passenger',
     'coords': {
         'latitude': 31.963817,
@@ -65,7 +65,7 @@ function userJoin(user) {
 };
 
 function getUser(sid) {
-  console.log(users);
+  // console.log(users);
   let user = users.filter(user => user.sid === sid);
   if(user.length !== 0) {
     console.log(user);
