@@ -57,6 +57,7 @@ io.on('connection', socket => {
   socket.on('leave', user => socket.leave(user.id));
 
   socket.on('driverBroadcast', user => {
+    console.log('broadcast', user)
     socket.to('passenger').emit('changeLocation', user);
   });
 
@@ -64,14 +65,15 @@ io.on('connection', socket => {
     // console.log(request)
     // let answer = inLine(request.location);
     // console.log(answer)
+    console.log(request)
     // if(answer)
-      return socket.emit('get_answer', request);
+      socket.to('captin').emit('get_answer', request);
     // socket.emit('rideResponse', { ...request, ...answer });
   });
 
   socket.on('answer', answer => {
     // console.log(answer);
-    socket.to(answer.userId).emit('answer', answer);
+    socket.to('passenger').emit('answer', answer);
   });
 
   socket.on('cancelRide', ride => {
