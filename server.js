@@ -43,11 +43,11 @@ io.on('connection', socket => {
     //   "name": "BAM",
     //    "type": "passenger"});
     
-    socket.emit('answer', { 
-      userId: user.id,
-       driverId: '1',
-        coords: { latitude: 32.02259893679403, longitude: 35.71472254169467 }
-      });
+    // socket.emit('answer', { 
+    //   userId: user.id,
+    //    driverId: '1',
+    //     coords: { latitude: 32.02259893679403, longitude: 35.71472254169467 }
+    //   });
   });
 
   socket.on('user_live', user => {
