@@ -85,7 +85,7 @@ io.on('connection', socket => {
     const user = getUser(socket.id);
     // console.log('user', user);
     userLeave(socket.id);
-    socket.emit('user_disconnect', user);
+    socket.to('captin').to('passenger').emit('user_disconnect', user);
     // socket.to(res.type).emit('update-coords', res.data);
   });
 });
