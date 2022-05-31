@@ -51,7 +51,7 @@ io.on('connection', socket => {
   });
 
   socket.on('user_live', user => {
-      socket.emit('new_user', user);
+      socket.to('passenger').to('captin').emit('new_user', user);
   });
 
   socket.on('leave', user => socket.leave(user.id));
